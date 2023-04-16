@@ -1,7 +1,7 @@
 import yargs from "yargs";
 import chalk from "chalk";
 
-import { addContact,listContacts } from "./contacts.js";
+import { addContact, listContacts, removeContact } from "./contacts.js";
 
 yargs.command({
   command: "create",
@@ -36,9 +36,25 @@ yargs.command({
   command: "list",
   aliases: ["l"],
   describe: `${chalk.green("[listing all contacts]")}`,
-  handler(){
-    listContacts()
-  }
+  handler() {
+    listContacts();
+  },
+});
+
+yargs.command({
+  command: "delete",
+  aliases: ["d", "dl"],
+  describe: `${chalk.green("[deleting chosen contact]")}`,
+  builder: {
+    id: {
+      describe: "contact's identifier",
+      demandOption: true,
+      type: "number",
+    },
+  },
+  handler({ id }) {
+    removeContact(id);
+  },
 });
 
 yargs.parse();

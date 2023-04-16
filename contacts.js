@@ -13,9 +13,14 @@ export const addContact = (fullname, phone, email) => {
     return;
   }
 
-  contacts.push({ id: contacts.length, fullname, phone, email });
+  contacts.push({
+    id: contacts[contacts.length - 1].id + 1,
+    fullname,
+    phone,
+    email,
+  });
 
-  saveContacts(contacts);
+  saveContacts(contacts, "Contact saved.");
 };
 
 export const listContacts = () => {
@@ -28,6 +33,18 @@ export const listContacts = () => {
   }
 };
 
+export const removeContact = (id) => {
+  const contacts = loadContacts();
+  const filteredContacts = contacts.filter((contact) => contact.id !== id);
+
+  if (contacts.length > filteredContacts.length === false) {
+    return console.log(chalk.red("There is no contact with this id!"));
+  }
+
+  saveContacts(filteredContacts, "Contact deleted.");
+  console.log(chalk.yellowBright("Contact deleted."));
+};
+
 const loadContacts = () => {
   try {
     return JSON.parse(fs.readFileSync("contacts.json"));
@@ -37,9 +54,9 @@ const loadContacts = () => {
   }
 };
 
-const saveContacts = (contacts) => {
+const saveContacts = (contacts, message) => {
   fs.writeFile("contacts.json", JSON.stringify(contacts), (err) => {
     if (err) console.log(chalk.red(err));
-    console.log(chalk.green("Contact Saved."));
+    console.log(chalk.green(message));
   });
 };
