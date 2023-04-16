@@ -18,6 +18,16 @@ export const addContact = (fullname, phone, email) => {
   saveContacts(contacts);
 };
 
+export const listContacts = () => {
+  const contacts = loadContacts();
+  if (contacts.length > 0) {
+    console.log(chalk.yellowBright("Your contacts: \n"));
+    console.table(contacts);
+  } else {
+    console.log(chalk.red("You don't have any contact!"));
+  }
+};
+
 const loadContacts = () => {
   try {
     return JSON.parse(fs.readFileSync("contacts.json"));

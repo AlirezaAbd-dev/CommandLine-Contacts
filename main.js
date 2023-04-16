@@ -1,6 +1,7 @@
 import yargs from "yargs";
+import chalk from "chalk";
 
-import { addContact } from "./contacts.js";
+import { addContact,listContacts } from "./contacts.js";
 
 yargs.command({
   command: "create",
@@ -29,6 +30,15 @@ yargs.command({
   handler({ fullname, email, phone }) {
     addContact(fullname, phone, email);
   },
+});
+
+yargs.command({
+  command: "list",
+  aliases: ["l"],
+  describe: `${chalk.green("[listing all contacts]")}`,
+  handler(){
+    listContacts()
+  }
 });
 
 yargs.parse();
