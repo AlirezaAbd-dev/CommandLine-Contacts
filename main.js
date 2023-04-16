@@ -3,10 +3,14 @@ import chalk from "chalk";
 
 import { addContact, listContacts, removeContact } from "./contacts.js";
 
+yargs.scriptName(`${chalk.yellow("Contact Manager")}`);
+yargs.usage(`$0 ${chalk.red("<command>")} ${chalk.green("[args]")}`);
+yargs.version("1.1.0");
+
 yargs.command({
   command: "create",
   aliases: ["c", "ct"],
-  describe: "[create new contact]",
+  describe: `${chalk.green("[create new contact]")}`,
   builder: {
     fullname: {
       alias: "f",
